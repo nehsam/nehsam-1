@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+
 import "./globals.css";
 import Topsale from "./component/navbar1 copy";
 import Footer from "./component/footer";

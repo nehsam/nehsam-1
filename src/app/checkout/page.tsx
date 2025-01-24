@@ -25,7 +25,6 @@ const Checkout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
 
   const validateForm = (): boolean => {
     if (!customerDetails.name.trim()) {
@@ -66,8 +65,6 @@ const Checkout = () => {
       setIsLoading(true);
       setMessage("");
       setIsError(false);
-      setIsSuccess(false);
-
       if (!validateForm()) {
         setIsLoading(false);
         return;
@@ -93,7 +90,6 @@ const Checkout = () => {
       }
 
       const data = await response.json();
-      setIsSuccess(true);
       setMessage(
         `Order placed successfully! Your order ID is: ${data.sanityOrderId}`
       );
@@ -190,7 +186,6 @@ const Checkout = () => {
             >
               {isLoading ? "Processing..." : "Place Order"}
             </button>
-
             {/* Message Display */}
             {message && (
               <div

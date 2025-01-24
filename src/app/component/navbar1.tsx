@@ -63,16 +63,16 @@ const Navbar = () => {
         setIsLoading(false);
       }
     }, 300),
-    [client]
+    []
   );
 
-  function debounce<T extends (...args: any[]) => Promise<void>>(func: T, wait: number): (...args: Parameters<T>) => void {
-    let timeout: NodeJS.Timeout;
-    return (...args: Parameters<T>) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
-    };
-  }
+  function debounce<T extends (query: string) => Promise<void>>(func: T, wait: number): (query: string) => void {
+      let timeout: NodeJS.Timeout;
+      return (query: string) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(query), wait);
+      };
+    }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
