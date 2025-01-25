@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import arrow from "@/app/images/Vector (1).png";
-import cat1 from "@/app/images/media bg-cover.png";
+import cat1 from "@/app/images/media bg-cover (4).png";
 import cat2 from "@/app/images/media bg-cover (1).png";
 import cat3 from "@/app/images/media bg-cover (2).png";
 import cat4 from "@/app/images/media bg-cover (3).png"
