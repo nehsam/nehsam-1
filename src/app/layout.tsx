@@ -3,10 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Topsale from "./component/navbar1 copy";
 import Footer from "./component/footer";
-import {
-  ClerkProvider,
-} from '@clerk/nextjs'
-;
+import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "./component/navbar1";
 
 export const metadata: Metadata = {
@@ -20,22 +17,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-    <html>
+    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+      <html lang="en">
         <body>
           {/* Hide Topsale on mobile */}
           <div className="hidden lg:block">
             <Topsale />
           </div>
-           <Navbar/>
+          <Navbar />
           {children}
-         
           <Footer />
         </body>
       </html>
-      </ClerkProvider>
-     
-      
-   
+    </ClerkProvider>
   );
 }
