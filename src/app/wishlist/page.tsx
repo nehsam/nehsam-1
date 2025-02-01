@@ -2,6 +2,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
+import Image from "next/image";
   
 
 const WishlistPage = () => {
@@ -46,10 +47,12 @@ const WishlistPage = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {wishlistItems.map((item) => (
-              <div key={item._id} className="bg-white rounded-lg shadow-md p-4">
-                <img
+              <div key={item._id} className="wishlist-item">
+                <Image
                   src={item.productImage}
                   alt={item.productName}
+                  width={500}
+                  height={500}
                   className="w-full h-48 object-cover rounded-md mb-4"
                 />
                 <h2 className="text-xl font-semibold text-gray-800">{item.productName}</h2>

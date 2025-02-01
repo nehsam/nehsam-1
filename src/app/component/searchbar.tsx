@@ -60,7 +60,7 @@ const SearchBar = () => {
       } finally {
         setIsLoading(false);
       }
-    }, 300),
+  }, 300),
     []
   );
 

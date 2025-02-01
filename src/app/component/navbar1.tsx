@@ -10,7 +10,7 @@ import { useUser } from "@clerk/nextjs";
 import SearchBar from "./searchbar";
 
 const Navbar = () => {
-  const router = useRouter();
+  // const router = useRouter(); // Removed unused variable
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { user } = useUser();
