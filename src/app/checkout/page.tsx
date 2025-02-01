@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 
@@ -21,7 +20,6 @@ const Checkout = () => {
     postalCode: "",
     country: "",
   });
-
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
@@ -60,17 +58,18 @@ const Checkout = () => {
     return true;
   };
 
-  const handleSubmitOrder = async (): Promise<void> => {
+  const handleSubmitOrder = async () => {
     try {
       setIsLoading(true);
       setMessage("");
       setIsError(false);
+
       if (!validateForm()) {
         setIsLoading(false);
         return;
       }
 
-      const response = await fetch("/api/orders", {
+      const response = await fetch("/api/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -83,18 +82,12 @@ const Checkout = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({
-          error: "Failed to place order",
-        }));
-        throw new Error(errorData.error || "Failed to place order");
+        const errorData = await response.text(); // Get raw response text for debugging
+        throw new Error(errorData || "Failed to place order");
       }
 
       const data = await response.json();
-      setMessage(
-        `Order placed successfully! Your order ID is: ${data.sanityOrderId}`
-      );
-
-      // Reset form
+      setMessage(`Order placed successfully! Your order ID is: ${data.sanityOrderId}`);
       setCustomerDetails({
         name: "",
         email: "",
@@ -103,13 +96,10 @@ const Checkout = () => {
         postalCode: "",
         country: "",
       });
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("Order error:", error);
       setIsError(true);
-      setMessage(
-        (error as Error).message ||
-          "Failed to place order. Please try again."
-      );
+      setMessage((error as Error).message || "Failed to place order. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -122,67 +112,96 @@ const Checkout = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4">
             <h1 className="text-2xl font-semibold">Checkout</h1>
-            <p className="text-blue-100 mt-1">
-              Please enter your details below
-            </p>
+            <p className="text-blue-100 mt-1">Please enter your details below</p>
           </div>
-
           <div className="p-6 space-y-6">
             {/* Personal Information */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                Personal Information
-              </h2>
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">Personal Information</h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Name
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                   <input
                     type="text"
                     className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="John Doe"
                     value={customerDetails.name}
                     onChange={(e) =>
-                      setCustomerDetails({
-                        ...customerDetails,
-                        name: e.target.value,
-                      })
+                      setCustomerDetails({ ...customerDetails, name: e.target.value })
                     }
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                   <input
                     type="email"
                     className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="john@example.com"
                     value={customerDetails.email}
                     onChange={(e) =>
-                      setCustomerDetails({
-                        ...customerDetails,
-                        email: e.target.value,
-                      })
+                      setCustomerDetails({ ...customerDetails, email: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                  <input
+                    type="text"
+                    className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="123 Main St"
+                    value={customerDetails.address}
+                    onChange={(e) =>
+                      setCustomerDetails({ ...customerDetails, address: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                  <input
+                    type="text"
+                    className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="New York"
+                    value={customerDetails.city}
+                    onChange={(e) =>
+                      setCustomerDetails({ ...customerDetails, city: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
+                  <input
+                    type="text"
+                    className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="10001"
+                    value={customerDetails.postalCode}
+                    onChange={(e) =>
+                      setCustomerDetails({ ...customerDetails, postalCode: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                  <input
+                    type="text"
+                    className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="USA"
+                    value={customerDetails.country}
+                    onChange={(e) =>
+                      setCustomerDetails({ ...customerDetails, country: e.target.value })
                     }
                   />
                 </div>
               </div>
             </div>
-
-            {/* Rest of the form remains unchanged */}
-
             {/* Submit Button */}
             <button
               onClick={handleSubmitOrder}
               disabled={isLoading}
-              className={`w-full py-3 px-4 rounded-lg text-white font-medium transition duration-200 ease-in-out transform hover:scale-[1.02]
-                ${
-                  isLoading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
-                }`}
+              className={`w-full py-3 px-4 rounded-lg text-white font-medium transition duration-200 ease-in-out transform hover:scale-[1.02] ${
+                isLoading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
+              }`}
             >
               {isLoading ? "Processing..." : "Place Order"}
             </button>
