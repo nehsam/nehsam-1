@@ -27,6 +27,7 @@ const SearchBar = () => {
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  // Debounce function
   const debounce = (func: (query: string) => void, wait: number): ((query: string) => void) => {
     let timeout: ReturnType<typeof setTimeout>;
     return (query: string) => {
@@ -35,41 +36,43 @@ const SearchBar = () => {
     };
   };
 
-  const searchProducts = useCallback(
-    debounce(async (query: string) => {
-      if (!query.trim()) {
-        setSearchResults([]);
-        return;
-      }
+  // Actual search function
+  const performSearch = async (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const sanityQuery = `*[_type == "product" && (title match "*${query}*" || description match "*${query}*")] | order(_createdAt desc)[0...10] {
+        _id,
+        title,
+        price,
+        discountedPrice,
+        description,
+        "imageUrl": productImage.asset->url
+      }`;
+      const results: Product[] = await client.fetch(sanityQuery);
+      setSearchResults(results);
+    } catch (error) {
+      console.error("Search error:", error);
+      setSearchResults([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      setIsLoading(true);
-      try {
-        const sanityQuery = `*[_type == "product" && (title match "*${query}*" || description match "*${query}*")] | order(_createdAt desc)[0...10] {
-          _id,
-          title,
-          price,
-          discountedPrice,
-          description,
-          "imageUrl": productImage.asset->url
-        }`;
-        const results: Product[] = await client.fetch(sanityQuery);
-        setSearchResults(results);
-      } catch (error) {
-        console.error("Search error:", error);
-        setSearchResults([]);
-      } finally {
-        setIsLoading(false);
-      }
-  }, 300),
-    []
-  );
+  // Debounced search function using useCallback
+  const debouncedSearch = useCallback(debounce(performSearch, 300), []);
 
+  // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
-    searchProducts(query);
+    debouncedSearch(query);
   };
 
+  // Handle search form submission
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -77,6 +80,7 @@ const SearchBar = () => {
     }
   };
 
+  // Clear search
   const clearSearch = () => {
     setSearchQuery("");
     setSearchResults([]);
@@ -104,7 +108,6 @@ const SearchBar = () => {
           </button>
         )}
       </form>
-
       {isSearchFocused && (searchResults.length > 0 || isLoading) && (
         <div className="absolute w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
           {isLoading ? (

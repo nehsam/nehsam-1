@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { FaRegHeart, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 import { LucideShoppingCart } from "lucide-react";
