@@ -6,7 +6,7 @@ import pic4 from "@/app/images/product-cover-5 (24).png";
 import pic5 from "@/app/images/product-cover-5 (25).png";
 import pic6 from "@/app/images/product-cover-5 (20).png";
 import CardT2 from "@/app/component/card2";
-import cm1 from "@/app/images/fa-brands-1.png";
+import cm1 from "@/app/images/fa-brands-1 copy.png";
 import cm2 from "@/app/images/fa-brands-2.png";
 import cm3 from "@/app/images/fa-brands-3.png";
 import cm4 from "@/app/images/fa-brands-4.png";
@@ -98,8 +98,8 @@ export default function Bestseller() {
         <div className="max-w-[1124px] mx-auto">
           {/* Logo Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 justify-center">
-            <div className="flex justify-center">
-              <Image src={cm1} alt="Client 1 Logo" className="h-12 w-auto" />
+          <div className="flex justify-center">
+              <Image src={cm1} alt="Client 2 Logo" className="h-12 w-auto" />
             </div>
             <div className="flex justify-center">
               <Image src={cm2} alt="Client 2 Logo" className="h-12 w-auto" />

@@ -10,12 +10,10 @@ import image1 from "@/app/images/single-product-1-thumb-1.jpg"; // Replace with 
 import image2 from "@/app/images/single-product-1-thumb-2.jpg";
 import Bestseller from "@/app/component/bestsaller";
 
-
 export default function Pages() {
   return (
-    <div className="relative">
-      
-      
+    <div className="relative overflow-x-hidden">
+      {/* Breadcrumbs */}
       <div className="w-full h-auto py-[24px] bg-[#FAFAFA] relative">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center sm:justify-start gap-[15px]">
           <div className="flex items-center gap-[15px]">
@@ -31,14 +29,14 @@ export default function Pages() {
       </div>
 
       {/* Product Section */}
-      <div className="container relative mx-auto px-4 py-12 flex flex-col md:flex-row gap-8 font-Montserrat">
+      <div className="container relative mx-auto px-4 py-12 flex flex-col lg:flex-row gap-8 font-Montserrat">
         {/* Left Section - Image Slider */}
         <div className="flex-1">
           <div className="relative">
             <Image
               src={mainImage}
               alt="Product Image"
-              className="rounded-lg"
+              className="rounded-lg w-full h-auto"
               width={600}
               height={400}
             />
@@ -77,7 +75,7 @@ export default function Pages() {
             </button>
           </div>
           {/* Thumbnails */}
-          <div className="flex mt-4 gap-4">
+          <div className="flex mt-4 gap-4 overflow-x-auto">
             <Image
               src={image1}
               alt="Thumbnail 1"
@@ -96,7 +94,7 @@ export default function Pages() {
         </div>
 
         {/* Right Section - Product Details */}
-        <div className="flex-1">
+        <div className="flex-1 w-full lg:w-auto">
           {/* Product Title and Rating */}
           <h1 className="text-2xl font-semibold text-gray-800">
             Floating Phone
@@ -172,18 +170,17 @@ export default function Pages() {
       </div>
 
       {/* ProductsCrads */}
-      <div className="w-[1051px] h-[72px] flex absolute justify-around top-[900px] left-[193px] bottom-[70px]">
-        <span className="font-Montserrat font-semibold text-[14px] leading-[24px] flex justify-center text-[#737373]">
+      <div className="w-full h-[72px] flex justify-around mt-[40px] mb-[70px]">
+        <span className="font-Montserrat font-semibold text-[14px] leading-[24px] text-[#737373]">
           Description
         </span>
-        <span className="font-Montserrat font-semibold text-[14px] leading-[24px] flex justify-center text-[#737373]">
+        <span className="font-Montserrat font-semibold text-[14px] leading-[24px] text-[#737373]">
           Additional Information
         </span>
-        <span className="font-Montserrat font-semibold text-[14px] leading-[24px] flex justify-center text-[#737373]">
+        <span className="font-Montserrat font-semibold text-[14px] leading-[24px] text-[#737373]">
           Reviews
           <h1 className="text-sm leading-[24px] text-[#23856D]">(0)</h1>
         </span>
-        <span className="w-[1049px] absolute top-[980px]  border[#ECECEC]"></span>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 px-4 md:px-8 py-8 md:py-12 items-center justify-center">
@@ -248,34 +245,11 @@ export default function Pages() {
                 </li>
               </ul>
             </div>
-
-            {/* Second List */}
-            <div>
-              <h3 className="text-[20px] md:text-[24px] font-bold text-gray-800">
-                the quick fox jumps over
-              </h3>
-              <ul className="mt-2 space-y-4 text-[#737373] font-Montserrat font-bold text-[14px] leading-[20px]">
-                <li className="flex items-center gap-2">
-                  <Image src={arrow} alt="Arrow" width={12} height={12} />
-                  the quick fox jumps over the lazy dog
-                </li>
-                <li className="flex items-center gap-2">
-                  <Image src={arrow} alt="Arrow" width={12} height={12} />
-                  the quick fox jumps over the lazy dog
-                </li>
-                <li className="flex items-center gap-2">
-                  <Image src={arrow} alt="Arrow" width={12} height={12} />
-                  the quick fox jumps over the lazy dog
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
-
-      {/* cards */}
+      {/* Bestseller */}
       <Bestseller />
-      
     </div>
   );
-}                                            
+}
